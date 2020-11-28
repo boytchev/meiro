@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/meiro.css">
+		
+		<!--script src="libx/touch-emulator.js"></script>
+		<script> TouchEmulator(); </script-->
+		<script src="libx/three.min.js"></script>
+		<script src="libx/Tween.js"></script>
+		
+		<script src="lib/main.js"></script>
+		<script src="lib/navigation.js"></script>
+		<script src="lib/dungeon.js"></script>
+		<script src="lib/dungeon.blueprint.js"></script>
+		<!--script src="lib/font.js"></script-->
+		<script>
+			var buttonBack;
+			
+			function main()
+			{
+				// ------------------
+				// INITIALIZATION
+				// ------------------
+				// initialize scene
+				renderer = new THREE.WebGLRenderer({antialias: true});
+				renderer.fullWindow();
+				scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 400);
+
+				options = new MEIRO.Options();
+				MEIRO.initBlueprint();
+
+				// managing the animation loop (to save battery and show statistics)
+				animationLoop = new MEIRO.AnimationLoop(loop,true); 
+
+				// create the dungeon
+				dungeon = new MEIRO.Dungeon();
+				dungeon.blueprint();
+
+				// setup mouse/touch/key navigation
+				controls = new MEIRO.OrbitControls();
+				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
+
+				// if the player position is known, go to player's level
+				dungeon.showLevel(Math.round(options.player?options.player.y/MEIRO.STAIRS.HEIGHT:0));
+				
+				// buttons for up/down
+				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', 'images/elevator.up.min.png');
+				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'ЕТАЖ НАДОЛУ', 'images/elevator.down.min.png');
+				if (options.backURL)
+				{
+					buttonBack = new MEIRO.CornerButton('topRight', goBack, 'НАЗАД', 'images/return.back.min.png');
+				}
+				
+				// button for help info
+				buttonHelp = new MEIRO.CornerButton('bottomRight', showInfo, 'ИНФО', 'images/help.info.min.png');
+				
+				adjustButtons();
+			}
+			
+			// scene animation loop
+			function loop()
+			{
+				TWEEN.update();
+				controls.update();
+				animationLoop.update();
+				
+				renderer.render(scene, camera);
+			}
+
+			// go up to the upper level
+			function goUp()
+			{
+				reanimate();
+				dungeon.goLevelUp();
+				adjustButtons();
+			}
+
+			// go down to the lower level
+			function goDown()
+			{
+				reanimate();
+				dungeon.goLevelDown();
+				adjustButtons();
+			}
+
+			// go back to given URL
+			function goBack()
+			{
+				window.location.href = options.backURL + (options.backURL.indexOf('?')<0?'?':'&') + options.vitals();
+			}
+			
+			// show/hide navigational buttons to invalid levels
+			function adjustButtons()
+			{
+				if (dungeon.level)
+					buttonDown.show();
+				else
+					buttonDown.hide();
+
+				if (dungeon.level + 2 <= dungeon.levels.length)
+					buttonUp.show();
+				else
+					buttonUp.hide();
+			}
+			
+			function showInfo()
+			{
+				window.addEventListener( 'keydown', hideInfo, false );
+				document.body.style.backgroundColor = 'DimGray';
+				
+				var elems = document.getElementsByTagName('canvas');
+				for (var i=0; i<elems.length; i++)
+				{
+					elems[i].className += ' blured';
+					elems[i].style.pointerEvents = 'none';
+				}
+				
+				var elems = document.getElementsByClassName('cornerButton');
+				for (var i=0; i<elems.length; i++)
+				{
+					elems[i].className += ' blured';
+					elems[i].style.pointerEvents = 'none';
+				}
+				
+								
+				document.getElementById('infoPanel').style.display = 'block';
+			}
+			
+			function hideInfo()
+			{
+				window.removeEventListener( 'keydown', hideInfo );
+				document.body.style.backgroundColor = 'DimGray';
+				
+				var elems = document.getElementsByTagName('canvas');
+				for (var i=0; i<elems.length; i++)
+				{
+					elems[i].classList.remove('blured');
+					elems[i].style.pointerEvents = 'auto';
+				}
+				
+				var elems = document.getElementsByClassName('cornerButton');
+				for (var i=0; i<elems.length; i++)
+				{
+					elems[i].classList.remove('blured');
+					elems[i].style.pointerEvents = 'auto';
+				}
+				
+				document.getElementById('infoPanel').style.display = 'none';
+			}
+			
+		</script> 
+	</head>
+	
+	<body onload="main()">
+		<div id="infoPanel" class="infoPanel" onclick="hideInfo()">
+			<h1>Карта</h1>
+			<p>Това е схематична карта на целия лабиринт. Картата може да ползваш за ориентация и планиране на движението.</p>
+			<p>С червен гео-маркер е отбелязано къде се намираш, а наличието на 3D модели е обозначено с квадрати.</p>
+		</div>
+	</body>
+</html>

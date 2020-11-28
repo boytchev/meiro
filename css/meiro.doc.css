@@ -1,0 +1,52 @@
+body {
+	font-family: Sans-Serif;
+}
+
+.infoPanel {
+	display: block;
+	font-size: 1em;
+}
+
+h2 {
+	#color: black !important;
+	margin-top: 1.5em;
+}
+
+p {
+	font-size: 1.2em !important;
+	margin-top: 0em;
+	padding-top: 0em;
+}
+
+ul {
+	margin-top: 0em;
+	padding-top: 0em;
+}
+
+li {
+	font-size: 1.2em;
+	padding-top: 0em;
+	padding-bottom: 0.5em;
+	margin-top: 0em;
+}
+
+code {
+	color: CornflowerBlue;
+	font-size: 1.35em;
+}
+
+:link, :visited {
+	padding: 0.1em 0.5em;
+	text-decoration: none;
+	color: white;
+	background: CornflowerBlue;
+	font-size: 1.35em;
+}
+
+em {
+	font-family: Serif;
+	color: Black;
+	font-size: 1.1em;
+	font-style: italic;
+	font-weight: normal;
+}
