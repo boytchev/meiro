@@ -39,14 +39,14 @@
 
 				// create the dungeon
 				dungeon = new MEIRO.Dungeon();
-				dungeon.blueprint();
+				blueprint =  new MEIRO.Blueprint( dungeon );
 
 				// setup mouse/touch/key navigation
 				controls = new MEIRO.OrbitControls();
 				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
 
 				// if the player position is known, go to player's level
-				dungeon.showLevel(Math.round(options.player?options.player.y/MEIRO.STAIRS.HEIGHT:0));
+//				dungeon.showLevel(Math.round(options.player?options.player.y/MEIRO.STAIRS.HEIGHT:0));
 				
 				// buttons for up/down
 				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', 'images/elevator.up.min.png');
