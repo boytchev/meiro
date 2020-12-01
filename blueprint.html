@@ -32,7 +32,6 @@
 				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 400);
 
 				options = new MEIRO.Options();
-				MEIRO.initBlueprint();
 
 				// managing the animation loop (to save battery and show statistics)
 				animationLoop = new MEIRO.AnimationLoop(loop,true); 
@@ -46,7 +45,7 @@
 				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
 
 				// if the player position is known, go to player's level
-//				dungeon.showLevel(Math.round(options.player?options.player.y/MEIRO.STAIRS.HEIGHT:0));
+				blueprint.showLevel(Math.round(options.player?options.player.y/MEIRO.STAIRS.HEIGHT:0));
 				
 				// buttons for up/down
 				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', 'images/elevator.up.min.png');
@@ -67,6 +66,7 @@
 			{
 				TWEEN.update();
 				controls.update();
+				blueprint.showLevel( blueprint.level );
 				animationLoop.update();
 				
 				renderer.render(scene, camera);
@@ -76,7 +76,7 @@
 			function goUp()
 			{
 				reanimate();
-				dungeon.goLevelUp();
+				blueprint.goLevelUp();
 				adjustButtons();
 			}
 
@@ -84,7 +84,7 @@
 			function goDown()
 			{
 				reanimate();
-				dungeon.goLevelDown();
+				blueprint.goLevelDown();
 				adjustButtons();
 			}
 
@@ -97,12 +97,12 @@
 			// show/hide navigational buttons to invalid levels
 			function adjustButtons()
 			{
-				if (dungeon.level)
+				if (blueprint.level)
 					buttonDown.show();
 				else
 					buttonDown.hide();
 
-				if (dungeon.level + 2 <= dungeon.levels.length)
+				if (blueprint.level + 2 <= dungeon.levels.length)
 					buttonUp.show();
 				else
 					buttonUp.hide();
