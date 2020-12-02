@@ -31,6 +31,14 @@
 				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 400);
 
+				// add top and bottom lights
+				var light = new THREE.DirectionalLight( 'white', 0.5 );
+					light.position.set( 1000, 3000, -500, 0.5 );
+					scene.add( light );
+				light = light.clone();
+					light.position.set(-1000,-3000,500);
+					scene.add(light);
+			
 				options = new MEIRO.Options();
 
 				// managing the animation loop (to save battery and show statistics)
@@ -38,15 +46,12 @@
 
 				// create the dungeon
 				dungeon = new MEIRO.Dungeon();
-				blueprint =  new MEIRO.Blueprint( dungeon );
+				blueprint =  new MEIRO.Blueprint();
 
 				// setup mouse/touch/key navigation
 				controls = new MEIRO.OrbitControls();
 				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
 
-				// if the player position is known, go to player's level
-				blueprint.showLevel(Math.round(options.player?options.player.y/MEIRO.STAIRS.HEIGHT:0));
-				
 				// buttons for up/down
 				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', 'images/elevator.up.min.png');
 				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'ЕТАЖ НАДОЛУ', 'images/elevator.down.min.png');
@@ -57,8 +62,17 @@
 				
 				// button for help info
 				buttonHelp = new MEIRO.CornerButton('bottomRight', showInfo, 'ИНФО', 'images/help.info.min.png');
-				
-				adjustButtons();
+
+				// set initial button visibility
+				if (blueprint.showLevel>0)
+					buttonDown.show();
+				else
+					buttonDown.hide();
+
+				if (blueprint.showLevel+1 < dungeon.levels.length)
+					buttonUp.show();
+				else
+					buttonUp.hide();
 			}
 			
 			// scene animation loop
@@ -66,7 +80,7 @@
 			{
 				TWEEN.update();
 				controls.update();
-				blueprint.showLevel( blueprint.level );
+				blueprint.opacityLevels();
 				animationLoop.update();
 				
 				renderer.render(scene, camera);
@@ -75,17 +89,30 @@
 			// go up to the upper level
 			function goUp()
 			{
-				reanimate();
+				if (blueprint.showLevel>=0)
+					buttonDown.show();
+				else
+					buttonDown.hide();
+					
+				if (blueprint.showLevel+2 >= dungeon.levels.length)
+					buttonUp.hide();
+				else
+					buttonUp.show();
 				blueprint.goLevelUp();
-				adjustButtons();
 			}
 
 			// go down to the lower level
 			function goDown()
 			{
-				reanimate();
+				if (blueprint.showLevel<=1)
+					buttonDown.hide();
+				else
+					buttonDown.show();
+				if (blueprint.showLevel < dungeon.levels.length)
+					buttonUp.show();
+				else
+					buttonUp.hide();
 				blueprint.goLevelDown();
-				adjustButtons();
 			}
 
 			// go back to given URL
@@ -97,12 +124,12 @@
 			// show/hide navigational buttons to invalid levels
 			function adjustButtons()
 			{
-				if (blueprint.level)
+				if (blueprint.showLevel>=1)
 					buttonDown.show();
 				else
 					buttonDown.hide();
 
-				if (blueprint.level + 2 <= dungeon.levels.length)
+				if (blueprint.showLevel+1 < dungeon.levels.length)
 					buttonUp.show();
 				else
 					buttonUp.hide();
