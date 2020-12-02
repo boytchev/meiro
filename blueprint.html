@@ -64,15 +64,8 @@
 				buttonHelp = new MEIRO.CornerButton('bottomRight', showInfo, 'ИНФО', 'images/help.info.min.png');
 
 				// set initial button visibility
-				if (blueprint.showLevel>0)
-					buttonDown.show();
-				else
-					buttonDown.hide();
-
-				if (blueprint.showLevel+1 < dungeon.levels.length)
-					buttonUp.show();
-				else
-					buttonUp.hide();
+				buttonDown.showHide( blueprint.showLevel>0 );
+				buttonUp.showHide( blueprint.showLevel+1 < dungeon.levels.length );
 			}
 			
 			// scene animation loop
@@ -89,29 +82,18 @@
 			// go up to the upper level
 			function goUp()
 			{
-				if (blueprint.showLevel>=0)
-					buttonDown.show();
-				else
-					buttonDown.hide();
-					
-				if (blueprint.showLevel+2 >= dungeon.levels.length)
-					buttonUp.hide();
-				else
-					buttonUp.show();
+				buttonDown.showHide( blueprint.showLevel>=0 );
+				buttonUp.showHide( blueprint.showLevel+2 < dungeon.levels.length );
+
 				blueprint.goLevelUp();
 			}
 
 			// go down to the lower level
 			function goDown()
 			{
-				if (blueprint.showLevel<=1)
-					buttonDown.hide();
-				else
-					buttonDown.show();
-				if (blueprint.showLevel < dungeon.levels.length)
-					buttonUp.show();
-				else
-					buttonUp.hide();
+				buttonDown.showHide( blueprint.showLevel>1 );
+				buttonUp.show( blueprint.showLevel < dungeon.levels.length );
+
 				blueprint.goLevelDown();
 			}
 
@@ -121,19 +103,6 @@
 				window.location.href = options.backURL + (options.backURL.indexOf('?')<0?'?':'&') + options.vitals();
 			}
 			
-			// show/hide navigational buttons to invalid levels
-			function adjustButtons()
-			{
-				if (blueprint.showLevel>=1)
-					buttonDown.show();
-				else
-					buttonDown.hide();
-
-				if (blueprint.showLevel+1 < dungeon.levels.length)
-					buttonUp.show();
-				else
-					buttonUp.hide();
-			}
 			
 			function showInfo()
 			{
