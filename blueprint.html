@@ -20,9 +20,13 @@
 		<script>
 			var buttonBack;
 			
-			const ICON_UP = '<g fill="white"><path d="M 16 84 L 12 84 L 8 52 L 0 52 L 0 24 L 8 21 L 16 36 L 24 21 L 32 24 L 32 52 L 24 52 L 20 84 L 16 84 "/><ellipse cx="16" cy="7" rx="7" ry="7" "/><path d="M 56 60 L 52 60 L 52 16 L 42 26 L 36 20 L 56 0 L 76 20 L 70 26 L 60 16 L 60 60 L 56 60 "/></g>';
+			const ICON_UP = '<g fill="white"><path d="M 24 68 L 12 80 L 12 26 L 0 28 L 18 0 L 36 28 L 24 26 L 24 68 "/></g>';
 
-			const ICON_DOWN = '<g fill="white"><path d="M 16 84 L 12 84 L 8 52 L 0 52 L 0 24 L 8 21 L 16 36 L 24 21 L 32 24 L 32 52 L 24 52 L 20 84 L 16 84 "/><ellipse cx="16" cy="7" rx="7" ry="7" "/><path d="M 56 24 L 52 24 L 52 68 L 42 58 L 36 64 L 56 84 L 76 64 L 70 58 L 60 68 L 60 24 L 56 24 "/></g>';
+			const ICON_DOWN = '<g fill="white"><path d="M 24 12 L 12 0 L 12 54 L 0 52 L 18 80 L 36 52 L 24 54 L 24 12 "/></g>';
+			
+			const ICON_INFO = '<g fill="white"><ellipse cx="8" cy="8" rx="8" ry="8" "/><path d="M 14 64 L 14 24 L 2 36 L 2 64 L 14 64 "/></g';
+			
+			const ICON_BACK = '<g fill="white"><path d="M 48 10 L 34 24 L 48 38 L 38 48 L 24 34 L 10 48 L 0 38 L 14 24 L 0 10 L 10 0 L 24 14 L 38 0 L 48 10 "/></g>';
 
 			function onWindowResize() {
 				renderer.setSize(window.innerWidth/MEIRO.RESOLUTION, window.innerHeight/MEIRO.RESOLUTION);
@@ -71,15 +75,15 @@
 				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
 
 				// buttons for up/down
-				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', ICON_UP);//'images/elevator.up.min.png');
-				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'ЕТАЖ НАДОЛУ', ICON_DOWN);//'images/elevator.down.min.png');
+				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'GO UP', ICON_UP, 20);
+				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'GO DOWN', ICON_DOWN, 20, 20);
 				if (options.backURL)
 				{
-					buttonBack = new MEIRO.CornerButton('topRight', goBack, 'НАЗАД', 'images/return.back.min.png');
+					buttonBack = new MEIRO.CornerButton('topRight', goBack, 'EXIT', ICON_BACK, 40, 10 );
 				}
 				
 				// button for help info
-				buttonHelp = new MEIRO.CornerButton('bottomRight', showInfo, 'ИНФО', 'images/help.info.min.png');
+				buttonHelp = new MEIRO.CornerButton('bottomRight', showInfo, 'INFO', ICON_INFO, 55, 30);
 
 				// set initial button visibility
 				buttonDown.showHide( blueprint.showLevel>0 );
