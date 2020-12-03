@@ -4,6 +4,9 @@ body {
 }
 
 
+svg {
+}
+
 /* corner buttons: located in screen corners */
 .cornerButton {
 	position: fixed;
@@ -45,7 +48,8 @@ body {
 .cornerIcon {
 	position: fixed;
 	z-index: 2;
-	width: 8vmin;
+	width: 9vmin;
+	height: 9vmin;
 }
 
 [corner=topLeft]>.cornerIcon {

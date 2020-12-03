@@ -20,6 +20,21 @@
 		<script>
 			var buttonBack;
 			
+			const ICON_UP = '<g fill="white"><path d="M 16 84 L 12 84 L 8 52 L 0 52 L 0 24 L 8 21 L 16 36 L 24 21 L 32 24 L 32 52 L 24 52 L 20 84 L 16 84 "/><ellipse cx="16" cy="7" rx="7" ry="7" "/><path d="M 56 60 L 52 60 L 52 16 L 42 26 L 36 20 L 56 0 L 76 20 L 70 26 L 60 16 L 60 60 L 56 60 "/></g>';
+
+			const ICON_DOWN = '<g fill="white"><path d="M 16 84 L 12 84 L 8 52 L 0 52 L 0 24 L 8 21 L 16 36 L 24 21 L 32 24 L 32 52 L 24 52 L 20 84 L 16 84 "/><ellipse cx="16" cy="7" rx="7" ry="7" "/><path d="M 56 24 L 52 24 L 52 68 L 42 58 L 36 64 L 56 84 L 76 64 L 70 58 L 60 68 L 60 24 L 56 24 "/></g>';
+
+			function onWindowResize() {
+				renderer.setSize(window.innerWidth/MEIRO.RESOLUTION, window.innerHeight/MEIRO.RESOLUTION);
+				//renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+				
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.fov = 30;
+				camera.updateProjectionMatrix();
+
+				reanimate();
+			}
+
 			function main()
 			{
 				// ------------------
@@ -30,6 +45,9 @@
 				renderer.fullWindow();
 				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 400);
+
+				window.removeEventListener('resize', onWindowResize);
+				window.addEventListener('resize', onWindowResize);
 
 				// add top and bottom lights
 				var light = new THREE.DirectionalLight( 'white', 0.5 );
@@ -53,8 +71,8 @@
 				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
 
 				// buttons for up/down
-				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', 'images/elevator.up.min.png');
-				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'ЕТАЖ НАДОЛУ', 'images/elevator.down.min.png');
+				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'ЕТАЖ НАГОРЕ', ICON_UP);//'images/elevator.up.min.png');
+				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'ЕТАЖ НАДОЛУ', ICON_DOWN);//'images/elevator.down.min.png');
 				if (options.backURL)
 				{
 					buttonBack = new MEIRO.CornerButton('topRight', goBack, 'НАЗАД', 'images/return.back.min.png');
@@ -153,6 +171,9 @@
 	</head>
 	
 	<body onload="main()">
+	
+	
+	
 		<div id="infoPanel" class="infoPanel" onclick="hideInfo()">
 			<h1>Карта</h1>
 			<p>Това е схематична карта на целия лабиринт. Картата може да ползваш за ориентация и планиране на движението.</p>
