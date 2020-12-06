@@ -77,7 +77,7 @@
 				}
 				
 				// button for help info
-				buttonHelp = new MEIRO.CornerButton('bottomRight', showInfo, 'INFO', MEIRO.ICON.INFO);
+				buttonHelp = new MEIRO.CornerButton('bottomRight', MEIRO.showInfo, 'INFO', MEIRO.ICON.INFO);
 
 				// set initial button visibility
 				buttonDown.showHide( blueprint.showLevel>0 );
@@ -118,64 +118,19 @@
 			{
 				window.location.href = options.backURL + (options.backURL.indexOf('?')<0?'?':'&') + options.vitals();
 			}
-			
-			
-			function showInfo()
-			{
-				window.addEventListener( 'keydown', hideInfo, false );
-				document.body.style.backgroundColor = 'DimGray';
-				
-				var elems = document.getElementsByTagName('canvas');
-				for (var i=0; i<elems.length; i++)
-				{
-					elems[i].className += ' blured';
-					elems[i].style.pointerEvents = 'none';
-				}
-				
-				var elems = document.getElementsByClassName('cornerButton');
-				for (var i=0; i<elems.length; i++)
-				{
-					elems[i].className += ' blured';
-					elems[i].style.pointerEvents = 'none';
-				}
-				
-								
-				document.getElementById('infoPanel').style.display = 'block';
-			}
-			
-			function hideInfo()
-			{
-				window.removeEventListener( 'keydown', hideInfo );
-				document.body.style.backgroundColor = 'DimGray';
-				
-				var elems = document.getElementsByTagName('canvas');
-				for (var i=0; i<elems.length; i++)
-				{
-					elems[i].classList.remove('blured');
-					elems[i].style.pointerEvents = 'auto';
-				}
-				
-				var elems = document.getElementsByClassName('cornerButton');
-				for (var i=0; i<elems.length; i++)
-				{
-					elems[i].classList.remove('blured');
-					elems[i].style.pointerEvents = 'auto';
-				}
-				
-				document.getElementById('infoPanel').style.display = 'none';
-			}
+
 			
 		</script> 
 	</head>
 	
 	<body onload="main()">
-	
-	
-	
-		<div id="infoPanel" class="infoPanel" onclick="hideInfo()">
+
+		<div id="dimmer"></div>
+		<div id="infoPanel" class="infoPanel">
 			<h1>Карта</h1>
 			<p>Това е схематична карта на целия лабиринт. Картата може да ползваш за ориентация и планиране на движението.</p>
 			<p>С червен гео-маркер е отбелязано къде се намираш, а наличието на 3D модели е обозначено с квадрати.</p>
+			<button onclick="MEIRO.hideInfo()">Close</button>
 		</div>
 	</body>
 </html>
