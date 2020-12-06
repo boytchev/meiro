@@ -17,7 +17,8 @@
 		<script src="lib/dungeon.js"></script>
 		<script src="lib/dungeon.level.js"></script>
 		<script src="lib/blueprint.js"></script>
-		<!--script src="lib/font.js"></script-->
+		<script src="lib/primitives.js"></script>
+		<script src="lib/font.js"></script>
 		<script>
 			var buttonBack;
 			
@@ -102,11 +103,37 @@
 				// set initial button visibility
 				buttonDown.showHide( blueprint.showLevel>0 );
 				buttonUp.showHide( blueprint.showLevel+1 < dungeon.levels.length );
+				
+				
+				
+				MEIRO.PRIMITIVE = {
+					FONT: new THREE.Font(MEIRO.FONT_JSON),
+					STYLE: {LABEL: new THREE.MeshBasicMaterial({color:'crimson'})},
+				};
+				labelP = new MEIRO.Label('YOU ARE',0.5,0,1.5,0);
+				labelP.position.set(options.player.x,1.5,options.player.z);
+				scene.add( labelP );
+				labelQ = new MEIRO.Label('HERE',0.5,0,0.8,0);
+				labelQ.position.set(options.player.x,1.5,options.player.z);
+				scene.add( labelQ );
+
 			}
 			
 			// scene animation loop
 			function loop()
 			{
+//labelP.rotateLabel();
+		labelP.rotation.set(
+			-controls.rot.y,
+			Math.PI/2-controls.rot.x,
+			0,
+			'YXZ');
+		labelQ.rotation.set(
+			-controls.rot.y,
+			Math.PI/2-controls.rot.x,
+			0,
+			'YXZ');
+		
 				TWEEN.update();
 				controls.update();
 				blueprint.update();
