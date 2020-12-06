@@ -173,6 +173,7 @@ body.blured {
 	border-radius: 0.2em;
 	z-index: 20;
 	width: 75%;
+	max-width: 40em;
 	margin: auto;
 	padding: 0 0 0 1em;
 	left: 50%;

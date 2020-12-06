@@ -42,13 +42,13 @@
 				renderer = new THREE.WebGLRenderer({antialias: true});
 				renderer.fullWindow();
 				scene = new THREE.Scene();
-				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 400);
+				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
 
 				window.removeEventListener('resize', onWindowResize);
 				window.addEventListener('resize', onWindowResize);
 
 				// add top and bottom lights
-				var light = new THREE.DirectionalLight( 'white', 0.5 );
+				var light = new THREE.SpotLight( 'white', 0.5 );
 					light.position.set( 1000, 3000, -500, 0.5 );
 					scene.add( light );
 				light = light.clone();
@@ -57,6 +57,25 @@
 			
 				options = new MEIRO.Options();
 
+
+				camera2 = camera.clone();
+				camera2.position.set(0,0,100);
+				scene2 = new THREE.Scene();
+				var light2 = new THREE.DirectionalLight( 'white', 1 );
+					light2.position.set( 0, 0, 1 );
+					light2.penumbra = 1/2;
+					scene2.add( light2 );
+				var sphere2 = new THREE.Mesh(
+					new THREE.SphereBufferGeometry( 100, 8, 8 ),
+					new THREE.MeshLambertMaterial({
+						color: MEIRO.BACKGROUND_COLOR,
+						side: THREE.BackSide,
+						depthWrite: false,
+					})
+				);
+				sphere2.rotation.x = Math.PI/2;
+				scene2.add( sphere2 );
+				
 				// managing the animation loop (to save battery and show statistics)
 				animationLoop = new MEIRO.AnimationLoop(loop,true); 
 
@@ -66,6 +85,7 @@
 
 				// setup mouse/touch/key navigation
 				controls = new MEIRO.OrbitControls();
+				controls.rotMin = 0.1;
 				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
 
 				// buttons for up/down
@@ -91,7 +111,10 @@
 				controls.update();
 				blueprint.update();
 				animationLoop.update();
-				
+
+				renderer.autoClear = true;
+				renderer.render(scene2, camera2);
+				renderer.autoClear = false;
 				renderer.render(scene, camera);
 			}
 
