@@ -31,6 +31,10 @@
 				camera.fov = 30;
 				camera.updateProjectionMatrix();
 
+				camera2.aspect = window.innerWidth / window.innerHeight;
+				camera2.fov = 30;
+				camera2.updateProjectionMatrix();
+
 				reanimate();
 			}
 
@@ -148,17 +152,17 @@
 			// go up to the upper level
 			function goUp()
 			{
-				buttonDown.showHide( blueprint.showLevel>=0 );
-				buttonUp.showHide( blueprint.showLevel+2 < dungeon.levels.length );
-
+				buttonDown.showHide( blueprint.targetLevel>=0 );
+				buttonUp.showHide( blueprint.targetLevel+2 < dungeon.levels.length );
+				
 				blueprint.goLevelUp();
 			}
 
 			// go down to the lower level
 			function goDown()
 			{
-				buttonDown.showHide( blueprint.showLevel>1 );
-				buttonUp.show( blueprint.showLevel < dungeon.levels.length );
+				buttonDown.showHide( blueprint.targetLevel>1 );
+				buttonUp.show( blueprint.targetLevel < dungeon.levels.length );
 
 				blueprint.goLevelDown();
 			}
