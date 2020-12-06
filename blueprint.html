@@ -8,78 +8,95 @@
 		
 		<!--script src="libx/touch-emulator.js"></script>
 		<script> TouchEmulator(); </script-->
-		<script src="libx/three.min.js"></script>
-		<script src="libx/Tween.js"></script>
+		<script defer src="libx/three.min.js"></script>
+		<script defer src="libx/Tween.js"></script>
 		
-		<script src="lib/main.js"></script>
-		<script src="lib/languages.js"></script>
-		<script src="lib/navigation.js"></script>
-		<script src="lib/dungeon.js"></script>
-		<script src="lib/dungeon.level.js"></script>
-		<script src="lib/blueprint.js"></script>
-		<script src="lib/primitives.js"></script>
-		<script src="lib/font.js"></script>
-		<script>
+		<script defer src="lib/main.js"></script>
+		<script defer src="lib/languages.js"></script>
+		<script defer src="lib/navigation.js"></script>
+		<script defer src="lib/dungeon.js"></script>
+		<script defer src="lib/dungeon.level.js"></script>
+		<script defer src="lib/blueprint.js"></script>
+		<script defer src="lib/primitives.js"></script>
+		<script defer src="lib/font.js"></script>
+		<script >
 			var buttonBack;
 			
 
-			function onWindowResize() {
+			// adjust camera and projection when the screen size is changed
+			// e.g. the smarthphone is rotated
+			function onWindowResize()
+			{
 				renderer.setSize(window.innerWidth/MEIRO.RESOLUTION, window.innerHeight/MEIRO.RESOLUTION);
-				//renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
 				
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.fov = 30;
 				camera.updateProjectionMatrix();
 
-				camera2.aspect = window.innerWidth / window.innerHeight;
-				camera2.fov = 30;
-				camera2.updateProjectionMatrix();
+				backgroundCamera.aspect = window.innerWidth / window.innerHeight;
+				backgroundCamera.fov = 30;
+				backgroundCamera.updateProjectionMatrix();
 
 				reanimate();
 			}
 
+
+			function mainScene()
+			{
+				scene = new THREE.Scene();
+				
+				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
+				
+				var bottomLight = new THREE.SpotLight( 'white', 0.5 );
+					bottomLight.position.set( 1000, 3000, -500, 0.5 );
+					
+				var topLight = new THREE.SpotLight( 'white', 0.5 );
+					topLight.position.set(-1000,-3000,500);
+					
+				scene.add( bottomLight, topLight );
+			}
+			
+			
+			function backgroundScene()
+			{
+				backgroundScene = new THREE.Scene();
+				
+				backgroundCamera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
+				backgroundCamera.position.set( 0, 0, 100 );
+				
+				var light = new THREE.DirectionalLight( 'white', 1 );
+					light.position.set( 0, 0, 1 );
+					light.penumbra = 1;
+					
+				var background = new THREE.Mesh(
+						new THREE.SphereBufferGeometry( 100, 8, 5, 0, 2*Math.PI, 0, Math.PI/2 ),
+						new THREE.MeshLambertMaterial({
+							color: MEIRO.BACKGROUND_COLOR,
+							side: THREE.BackSide,
+							depthWrite: false,
+						}));
+					background.rotation.x = -Math.PI/2;
+				
+				backgroundScene.add( light, background );
+			}
+			
+			
 			function main()
 			{
-				// ------------------
-				// INITIALIZATION
-				// ------------------
+				// get Meiro options
+				options = new MEIRO.Options();
+
 				// initialize scene
 				renderer = new THREE.WebGLRenderer({antialias: true});
 				renderer.fullWindow();
-				scene = new THREE.Scene();
-				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
-
+				
+				// set own resize handler
 				window.removeEventListener('resize', onWindowResize);
 				window.addEventListener('resize', onWindowResize);
 
-				// add top and bottom lights
-				var light = new THREE.SpotLight( 'white', 0.5 );
-					light.position.set( 1000, 3000, -500, 0.5 );
-					scene.add( light );
-				light = light.clone();
-					light.position.set(-1000,-3000,500);
-					scene.add(light);
-			
-				options = new MEIRO.Options();
-
-
-				camera2 = camera.clone();
-				camera2.position.set(0,0,100);
-				scene2 = new THREE.Scene();
-				var light2 = new THREE.DirectionalLight( 'white', 1 );
-					light2.position.set( 0, 0, 1 );
-					light2.penumbra = 1/2;
-					scene2.add( light2 );
-				var sphere2 = new THREE.Mesh(
-					new THREE.SphereBufferGeometry( 100, 8, 8 ),
-					new THREE.MeshLambertMaterial({
-						color: MEIRO.BACKGROUND_COLOR,
-						side: THREE.BackSide,
-						depthWrite: false,
-					})
-				);
-				sphere2.rotation.x = Math.PI/2;
-				scene2.add( sphere2 );
+				mainScene();
+				
+				backgroundScene();
 				
 				// managing the animation loop (to save battery and show statistics)
 				animationLoop = new MEIRO.AnimationLoop(loop,true); 
@@ -91,24 +108,20 @@
 				// setup mouse/touch/key navigation
 				controls = new MEIRO.OrbitControls();
 				controls.rotMin = 0.1;
-				camera.target = new THREE.Vector3(options.size.x/2,0,options.size.z/2);
+				camera.target = new THREE.Vector3( options.size.x/2, 0, options.size.z/2 );
 
-				// buttons for up/down
+				// buttons for up/down/back/info
 				buttonUp = new MEIRO.CornerButton('topLeft', goUp, 'GO UP', MEIRO.ICON.UP);
 				buttonDown = new MEIRO.CornerButton('bottomLeft', goDown, 'GO DOWN', MEIRO.ICON.DOWN);
 				if (options.backURL)
 				{
 					buttonBack = new MEIRO.CornerButton('topRight', goBack, 'CLOSE', MEIRO.ICON.BACK );
 				}
-				
-				// button for help info
 				buttonHelp = new MEIRO.CornerButton('bottomRight', MEIRO.showInfo, 'INFO', MEIRO.ICON.INFO);
 
 				// set initial button visibility
 				buttonDown.showHide( blueprint.showLevel>0 );
 				buttonUp.showHide( blueprint.showLevel+1 < dungeon.levels.length );
-				
-				
 				
 				MEIRO.PRIMITIVE = {
 					FONT: new THREE.Font(MEIRO.FONT_JSON),
@@ -144,9 +157,9 @@
 				animationLoop.update();
 
 				renderer.autoClear = true;
-				renderer.render(scene2, camera2);
+				renderer.render( backgroundScene, backgroundCamera );
 				renderer.autoClear = false;
-				renderer.render(scene, camera);
+				renderer.render( scene, camera );
 			}
 
 			// go up to the upper level
