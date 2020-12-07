@@ -14,12 +14,15 @@ time until the old code is refactored and polished. This document
 will present on the elements that are fixed.
 
 # Floor plan
-During the game students may view the floor plan of Meiro.
-This is a map of floors, rooms, locations of models, etc.
+During the game students may view the floor plan of Meiro. This is
+a map of floors, rooms, locations of models, etc.
 
-[Demo](https://boytchev.github.io/meiro/blueprint.html)
-[Default building<br><img src="examples/snapshots/example-posture.jpg" width="150">](https://boytchev.github.io/mannequin.js/examples/example-posture.html)
-[<img src="examples/snapshots/example-figure-types.jpg" width="150">](https://boytchev.github.io/mannequin.js/examples/example-figure-types.html)
-[<img src="examples/snapshots/example-custom-body-parts.jpg" width="150">](https://boytchev.github.io/mannequin.js/examples/example-custom-body-parts.html)
-[<img src="examples/snapshots/example-point.jpg" width="150">](https://boytchev.github.io/mannequin.js/examples/example-point.html)
-[<img src="examples/snapshots/example-scene.jpg" width="150">](https://boytchev.github.io/mannequin.js/examples/example-scene.html)
+### Examples
+Click on an image to run live demos of different Meiros. They are
+generated at run time, so every time they will show a different 
+allocation of rooms.
+
+[<img src="images/snapshots/floor-plan-1.jpg" width="150">](https://boytchev.github.io/meiro/blueprint.html?zoom=3)
+[<img src="images/snapshots/floor-plan-2.jpg" width="150">](https://boytchev.github.io/meiro/blueprint.html?size=40x1x60&rooms=200&zoom=3)
+[<img src="images/snapshots/floor-plan-3.jpg" width="150">](https://boytchev.github.io/meiro/blueprint.html?size=40x10x60&rooms=200&zoom=3&pos=20x6x15x1&split=3x5x0.1)
+
