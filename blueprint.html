@@ -21,16 +21,6 @@
 		<script defer src="lib/font.js"></script>
 		<script >
 
-			// create main foreground scene
-			function mainScene()
-			{
-				scene = new THREE.Scene();
-				
-				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
-			
-			} // mainScene
-			
-			
 			// create background scene - circular gradient background
 			function backgroundScene()
 			{
@@ -65,7 +55,9 @@
 				renderer = new THREE.WebGLRenderer( {antialias: true} );
 				renderer.fullWindow();
 
-				mainScene();
+				scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
+
 				backgroundScene();
 				
 				// managing the animation loop (to save battery and show statistics)
@@ -104,6 +96,7 @@
 				window.removeEventListener('resize', onWindowResize);
 				window.addEventListener('resize', onWindowResize);
 			} // main
+			
 			
 			// scene animation loop
 			function loop()
@@ -168,13 +161,15 @@
 	</head>
 	
 	<body onload="main()">
-
 		<div id="dimmer"></div>
 		<div id="infoPanel" class="infoPanel">
-			<h1>Карта</h1>
-			<p>Това е схематична карта на целия лабиринт. Картата може да ползваш за ориентация и планиране на движението.</p>
-			<p>С червен гео-маркер е отбелязано къде се намираш, а наличието на 3D модели е обозначено с квадрати.</p>
-			<button onclick="MEIRO.hideInfo()">Close</button>
+			<h1 lang="en">Floor plan</h1>
+			
+			<p lang="en">This is a map of the whole Meiro building. You can use the map to plan your path to models, marked by squares. If you see stairs, you can go up or down to other floors.</p>
+			
+			<p lang="en"></p>
+			
+			<button onclick="MEIRO.hideInfo()" lang="en">Close</button>
 		</div>
 	</body>
 </html>
