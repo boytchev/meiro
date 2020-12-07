@@ -29,9 +29,9 @@ allocation of rooms.
 
 Meiro passes configuration data as parameters embedded in the web address:
 
-* `id=&#119821;` &ndash; building id &#119821;, a number defining the structure of the building. A random id is used if the id is missing or is 0. There is no default value. Example: `id=3`.
+* `id=𝐍` &ndash; building id 𝐍, a number defining the structure of the building. A random id is used if the id is missing or is 0. There is no default value. Example: `id=3`.
 
-* `size=*X*x*Y*x*Z*` &ndash; building size, a string of three integer numbers: *X* and *Z* are the horizontal sizes of the building, *Y* is the number of floors. By default size is `size=20x3x15`.
+* `size=𝐗x𝐘x𝐙` &ndash; building size, a string of three integer numbers: 𝐗 and 𝐙 are the horizontal sizes of the building, 𝐘 is the number of floors. By default size is `size=20x3x15`.
 
 					<li><code>stairs</code> &ndash; желан, но негарантиран, брой стълби между два съседни етажа. По подразбиране е 5.</li>
 					<li><code>split</code> &ndash; разделяне на лабиринта, стринг от три числа &ndash; <em>minRoom</em>, <em>maxRoom</em> и <em>extraDoors</em>, разделени с x-ове. <em>minRoom</em> е цяло число за минималния размер на остатъчна стая при рязане на стая на две. Ако стая е с размер по-голям от <em>maxRoom</em> (също цяло число), то тя ще бъде разделена. <em>extraDoors</em> е дробно число, което се умножава с дължината на стена и определя колко най-много случайни допълнителни врати ще има, освен задължителната една врата. По подразбиране е 3x8x0.1.</li>
