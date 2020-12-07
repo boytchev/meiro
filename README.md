@@ -29,7 +29,7 @@ allocation of rooms.
 
 Meiro passes configuration data as parameters embedded in the web address:
 
-* `id=`*`N`* &ndash; building id *N*, a number defining the structure of the building. A random id is used if the id is missing or is 0. There is no default value. Example: `id=3`.
+* `id=&#119821;` &ndash; building id &#119821;, a number defining the structure of the building. A random id is used if the id is missing or is 0. There is no default value. Example: `id=3`.
 
 * `size=*X*x*Y*x*Z*` &ndash; building size, a string of three integer numbers: *X* and *Z* are the horizontal sizes of the building, *Y* is the number of floors. By default size is `size=20x3x15`.
 
