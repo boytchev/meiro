@@ -20,43 +20,18 @@
 		<script defer src="lib/primitives.js"></script>
 		<script defer src="lib/font.js"></script>
 		<script >
-			var buttonBack;
-			
 
-			// adjust camera and projection when the screen size is changed
-			// e.g. the smarthphone is rotated
-			function onWindowResize()
-			{
-				renderer.setSize(window.innerWidth/MEIRO.RESOLUTION, window.innerHeight/MEIRO.RESOLUTION);
-				
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.fov = 30;
-				camera.updateProjectionMatrix();
-
-				backgroundCamera.aspect = window.innerWidth / window.innerHeight;
-				backgroundCamera.fov = 30;
-				backgroundCamera.updateProjectionMatrix();
-
-				reanimate();
-			}
-
-
+			// create main foreground scene
 			function mainScene()
 			{
 				scene = new THREE.Scene();
 				
 				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
-				
-				var bottomLight = new THREE.SpotLight( 'white', 0.5 );
-					bottomLight.position.set( 1000, 3000, -500, 0.5 );
-					
-				var topLight = new THREE.SpotLight( 'white', 0.5 );
-					topLight.position.set(-1000,-3000,500);
-					
-				scene.add( bottomLight, topLight );
-			}
+			
+			} // mainScene
 			
 			
+			// create background scene - circular gradient background
 			function backgroundScene()
 			{
 				backgroundScene = new THREE.Scene();
@@ -78,29 +53,31 @@
 					background.rotation.x = -Math.PI/2;
 				
 				backgroundScene.add( light, background );
-			}
+			} // backgroundScene
 			
 			
 			function main()
 			{
-				// get Meiro options
+				// get Meiro options (eg. dungeon size, number of rooms etc)
 				options = new MEIRO.Options();
 
-				// initialize scene
-				renderer = new THREE.WebGLRenderer({antialias: true});
+				// initialize graphics
+				renderer = new THREE.WebGLRenderer( {antialias: true} );
 				renderer.fullWindow();
-				
-				// set own resize handler
-				window.removeEventListener('resize', onWindowResize);
-				window.addEventListener('resize', onWindowResize);
 
 				mainScene();
-				
 				backgroundScene();
 				
 				// managing the animation loop (to save battery and show statistics)
 				animationLoop = new MEIRO.AnimationLoop(loop,true); 
 
+				// recreate font geometry and material so that
+				// we can use only MEIRO.Label from primitives.js
+				MEIRO.PRIMITIVE = {
+					FONT: new THREE.Font(MEIRO.FONT_JSON),
+					STYLE: {LABEL: new THREE.MeshBasicMaterial({color:'crimson'})},
+				};
+				
 				// create the dungeon
 				dungeon = new MEIRO.Dungeon();
 				blueprint =  new MEIRO.Blueprint();
@@ -123,34 +100,14 @@
 				buttonDown.showHide( blueprint.showLevel>0 );
 				buttonUp.showHide( blueprint.showLevel+1 < dungeon.levels.length );
 				
-				MEIRO.PRIMITIVE = {
-					FONT: new THREE.Font(MEIRO.FONT_JSON),
-					STYLE: {LABEL: new THREE.MeshBasicMaterial({color:'crimson'})},
-				};
-				labelP = new MEIRO.Label('YOU ARE',0.5,0,1.5,0);
-				labelP.position.set(options.player.x,1.5,options.player.z);
-				scene.add( labelP );
-				labelQ = new MEIRO.Label('HERE',0.5,0,0.8,0);
-				labelQ.position.set(options.player.x,1.5,options.player.z);
-				scene.add( labelQ );
-
-			}
+				// set own resize handler
+				window.removeEventListener('resize', onWindowResize);
+				window.addEventListener('resize', onWindowResize);
+			} // main
 			
 			// scene animation loop
 			function loop()
 			{
-//labelP.rotateLabel();
-		labelP.rotation.set(
-			-controls.rot.y,
-			Math.PI/2-controls.rot.x,
-			0,
-			'YXZ');
-		labelQ.rotation.set(
-			-controls.rot.y,
-			Math.PI/2-controls.rot.x,
-			0,
-			'YXZ');
-		
 				TWEEN.update();
 				controls.update();
 				blueprint.update();
@@ -162,6 +119,7 @@
 				renderer.render( scene, camera );
 			}
 
+
 			// go up to the upper level
 			function goUp()
 			{
@@ -170,6 +128,7 @@
 				
 				blueprint.goLevelUp();
 			}
+
 
 			// go down to the lower level
 			function goDown()
@@ -180,12 +139,30 @@
 				blueprint.goLevelDown();
 			}
 
+
 			// go back to given URL
 			function goBack()
 			{
 				window.location.href = options.backURL + (options.backURL.indexOf('?')<0?'?':'&') + options.vitals();
 			}
 
+
+			// adjust camera and projection when the screen size is changed
+			// e.g. the smarthphone is rotated
+			function onWindowResize()
+			{
+				renderer.setSize(window.innerWidth/MEIRO.RESOLUTION, window.innerHeight/MEIRO.RESOLUTION);
+				
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.fov = 30;
+				camera.updateProjectionMatrix();
+
+				backgroundCamera.aspect = window.innerWidth / window.innerHeight;
+				backgroundCamera.fov = 30;
+				backgroundCamera.updateProjectionMatrix();
+
+				reanimate();
+			} // onWindowResize
 			
 		</script> 
 	</head>
