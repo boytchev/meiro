@@ -16,3 +16,5 @@ will present on the elements that are fixed.
 # Floor plan
 During the game students may view the floor plan of Meiro.
 This is a map of floors, rooms, locations of models, etc.
+
+[Demo](https://boytchev.github.io/meiro/blueprint.html)
