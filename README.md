@@ -11,7 +11,7 @@ Computer Sciences undergraduate students from the
 # Important note
 The Meiro project is currently being githubbed. It will take some
 time until the old code is refactored and polished. This document
-will present on the elements that are fixed.
+will present the elements that are fixed.
 
 # Floor plan
 During the game students may view the floor plan of Meiro. This is
