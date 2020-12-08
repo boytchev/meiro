@@ -32,7 +32,7 @@ Meiro passes configuration data as parameters embedded in the web address.
 <!-- https://www.compart.com/en/unicode/block/U+1D400 -->
 <!-- 𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙 -->
 
-### Topological properties
+### Topology
 
 * `id=𝐍` &ndash; building id 𝐍, a number defining the structure of the building. A random id is used if the id is missing or it the id is 0. There is no default value. Example: `id=3`.
 
@@ -42,21 +42,20 @@ Meiro passes configuration data as parameters embedded in the web address.
 
 * `split=𝐌𝐈𝐍x𝐌𝐀𝐗x𝐃` &ndash; splitting into rooms, a string of three numbers. The rooms of each floor are generating by splitting larger rooms into smaller rooms. 𝐌𝐈𝐍 is an integer number for the minimal size of a room after splitting. If a room is larger than 𝐌𝐀𝐗 (also an integer number), it could be split if needed. A room is split by addind a wall with at least 1 door. The floating number 𝐃 multiplied by the wall length defines the number of additional doors in the wall. By default `split=3x8x0.1`.
 
-### Interface properties
+### Content
 
-<!-- 𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙 -->
+* `pos=𝐗x𝐘x𝐙x𝐀</code> &ndash; player position, a string containg four floating point numbers. A sign *"You are here"* is placed at position (𝐗,𝐘,𝐙) and pointing toward direction 𝐀 - an angle in radians. If `pos` is missing, there will be no sign. No default value.
+
+* `model=𝐌₁,𝐌₂,𝐌₃,....𝐌ₙ` or `models=𝐌₁,𝐌₂,𝐌₃,....𝐌ₙ` &ndash; a list of models names. These models are placed in the largest rooms. No default value.</li>
+
+### Interface
 
 * `back` or `back=𝐔𝐑𝐋` &ndash; shows a button for closing the current page. If 𝐔𝐑𝐋 is defined it defines the returning URL address. No default value.
 
 * `zoom=𝐍` &ndash; zoom factor, the floating point number 𝐍 defines the maximal zoom-in and zoom-out. For example, `zoom=10` allows zooming from x0.1 to x10. By default `zoom=1`.
 
-* `lang=𝐋` &ndash; string for the interface language, currently one of these values `en` (English) or `bg` (Bulgarian). If undefined, Meiro switches to English. No default value.
-
-<!--
-
-					<li><code>pos</code> &ndash; начална позиция на играча, стринг от четири дробни числа &ndash; <em>X</em>, <em>Y</em>, <em>Z</em> и <em>Angle</em>, разделени с x-ове. <em>X</em> и <em>Z</em> са хоризонталните координати в лабиринта, <em>Y</em> е на кой етаж е играчът (ако е дробно число, играчът е на стълби между етажи), а <em>Angle</em> е посоката на гледане представена като ъгъл в радиани. Няма стойност по подразбиране.</li>
-					<li><code>lowpoly</code> &ndash; параметър без стойност, самото му съществуване предизвиква генериране на обекти с по-малко стени. Ако липсва, стените са повече на брой и обектите са по-гладки.</li>
-					<li><code>model</code> или <code>models</code> &ndash; списък от имена на модели, които да се заредят и разпределят по стаите на лабиринта. Имената са разделени със запетайки, например: <em>m00001,m00002,m00003</em>. Няма стойност по подразбиране.</li>
--->
+* `lowpoly` &ndash; a parameter without a value. It existence hints Meiro to use simpler objects in attempt to make graphics faster. If not defined, Meiro uses more complex objects. No default value.
+					
+* `lang=𝐋` &ndash; string for the interface language, currently one of these values `en` (English) or `bg` (Bulgarian). If undefined, Meiro switches to English as if it is `lang=en`. No default value.
 
 December 2020
