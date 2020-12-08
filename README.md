@@ -27,16 +27,21 @@ allocation of rooms.
 
 # Meiro parameters
 
-Meiro passes configuration data as parameters embedded in the web address:
+Meiro passes configuration data as parameters embedded in the web address.
+
+<!-- https://www.compart.com/en/unicode/block/U+1D400 -->
+
+### Topological properties
 
 * `id=𝐍` &ndash; building id 𝐍, a number defining the structure of the building. A random id is used if the id is missing or it the id is 0. There is no default value. Example: `id=3`.
 
-* `size=𝐗x𝐘x𝐙` &ndash; building size, a string of three integer numbers: 𝐗 and 𝐙 are the horizontal sizes of the building, 𝐘 is the number of floors. By default size is `size=20x3x15`.
+* `size=𝐗x𝐘x𝐙` &ndash; building size, a string of three integer numbers: 𝐗 and 𝐙 are for the horizontal sizes of the building, 𝐘 is the number of floors. By default size is `size=20x3x15`.
 
 * `stairs=𝐍` &ndash; maximal number of stairs between two floors. Depending on the building layout the number of actual stairs could be less. By default `stairs=5`.
 
+* `split=𝐌𝐈𝐍x𝐌𝐀𝐗x𝐃` &ndash; splitting into rooms, a string of three numbers. The rooms of each floor are generating by splitting larger rooms into smaller rooms. 𝐌𝐈𝐍 is an integer number for the minimal size of a room after splitting. If a room is larger than 𝐌𝐀𝐗 (also an integer number), it could be split if needed. A room is split by addind a wall with at least 1 door. The floating number 𝐃 multiplied by the wall length defines the number of additional door to add to the wall. By default `split=3x8x0.1`.
 <!--
-					<li><code>split</code> &ndash; разделяне на лабиринта, стринг от три числа &ndash; <em>minRoom</em>, <em>maxRoom</em> и <em>extraDoors</em>, разделени с x-ове. <em>minRoom</em> е цяло число за минималния размер на остатъчна стая при рязане на стая на две. Ако стая е с размер по-голям от <em>maxRoom</em> (също цяло число), то тя ще бъде разделена. <em>extraDoors</em> е дробно число, което се умножава с дължината на стена и определя колко най-много случайни допълнителни врати ще има, освен задължителната една врата. По подразбиране е 3x8x0.1.</li>
+
 					<li><code>pos</code> &ndash; начална позиция на играча, стринг от четири дробни числа &ndash; <em>X</em>, <em>Y</em>, <em>Z</em> и <em>Angle</em>, разделени с x-ове. <em>X</em> и <em>Z</em> са хоризонталните координати в лабиринта, <em>Y</em> е на кой етаж е играчът (ако е дробно число, играчът е на стълби между етажи), а <em>Angle</em> е посоката на гледане представена като ъгъл в радиани. Няма стойност по подразбиране.</li>
 					<li><code>zoom</code> &ndash; диапазон на максимално приближаване или отдалечаване в режим на карта. Ако е 10, то образът може да се мащабира от x0.1 до x10. По подразбиране е 1.</li>
 					<li><code>lowpoly</code> &ndash; параметър без стойност, самото му съществуване предизвиква генериране на обекти с по-малко стени. Ако липсва, стените са повече на брой и обектите са по-гладки.</li>
