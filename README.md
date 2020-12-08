@@ -50,7 +50,7 @@ Meiro passes configuration data as parameters embedded in the web address.
 
 * `zoom=𝐍` &ndash; zoom factor, the floating point number 𝐍 defines the maximal zoom-in and zoom-out. For example, `zoom=10` allows zooming from x0.1 to x10. By default `zoom=1`.
 
-* `lang=𝐋 &ndash; string for the interface language, currently one of these values `en` (English) or `bg` (Bulgarian). If undefined, Meiro switches to English. No default value.
+* `lang=𝐋` &ndash; string for the interface language, currently one of these values `en` (English) or `bg` (Bulgarian). If undefined, Meiro switches to English. No default value.
 
 <!--
 
