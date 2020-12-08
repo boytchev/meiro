@@ -58,7 +58,7 @@
 				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.6, 1000);
 
-				backgroundScene();
+				if( !options.lowpoly ) backgroundScene();
 				
 				// managing the animation loop (to save battery and show statistics)
 				animationLoop = new MEIRO.AnimationLoop(loop,true); 
@@ -76,7 +76,7 @@
 
 				// setup mouse/touch/key navigation
 				controls = new MEIRO.OrbitControls();
-				controls.rotMin = 0.1;
+				controls.rotMin = 0;
 				camera.target = new THREE.Vector3( options.size.x/2, 0, options.size.z/2 );
 
 				// buttons for up/down/back/info
@@ -106,9 +106,12 @@
 				blueprint.update();
 				animationLoop.update();
 
-				renderer.autoClear = true;
-				renderer.render( backgroundScene, backgroundCamera );
-				renderer.autoClear = false;
+				if( !options.lowpoly )
+				{
+					renderer.autoClear = true;
+					renderer.render( backgroundScene, backgroundCamera );
+					renderer.autoClear = false;
+				}
 				renderer.render( scene, camera );
 			}
 
