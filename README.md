@@ -36,11 +36,13 @@ Meiro passes configuration data as parameters embedded in the web address.
 
 * `id=𝐍` &ndash; building id 𝐍, a number defining the structure of the building. A random id is used if the id is missing or it the id is 0. There is no default value. Example: `id=3`.
 
-* `size=𝐗x𝐘x𝐙` &ndash; building size, a string of three integer numbers: 𝐗 and 𝐙 are for the horizontal sizes of the building, 𝐘 is the number of floors. By default size is `size=20x3x15`.
+* `size=𝐗x𝐘x𝐙` &ndash; building size, a string of three integer numbers: 𝐗∈[4,100] and 𝐙∈[4,100] are for the horizontal sizes of the building, 𝐘∈[1,30] is the number of floors. By default size is `size=20x3x15`.
 
-* `stairs=𝐍` &ndash; maximal number of stairs between two floors. Depending on the building layout the number of actual stairs could be less. By default `stairs=5`.
+* `stairs=𝐍` &ndash; maximal number of stairs 𝐍∈[0,200] between two floors. Depending on the building layout the number of actual stairs could be less. By default `stairs=5`.
 
-* `split=𝐌𝐈𝐍x𝐌𝐀𝐗x𝐃` &ndash; splitting into rooms, a string of three numbers. The rooms of each floor are generating by splitting larger rooms into smaller rooms. 𝐌𝐈𝐍 is an integer number for the minimal size of a room after splitting. If a room is larger than 𝐌𝐀𝐗 (also an integer number), it could be split if needed. A room is split by addind a wall with at least 1 door. The floating number 𝐃 multiplied by the wall length defines the number of additional doors in the wall. By default `split=3x8x0.1`.
+* `rooms=𝐍` &ndash; maximal number 𝐍∈[1,100000] of rooms in the whole building. By default `rooms=10`.
+
+* `split=𝐌𝐈𝐍x𝐌𝐀𝐗x𝐃` &ndash; splitting into rooms, a string of three numbers. The rooms of each floor are generating by splitting larger rooms into smaller rooms. 𝐌𝐈𝐍∈[1,30] is an integer number for the minimal size of a room after splitting. If a room is larger than 𝐌𝐀𝐗∈[1,100] (also an integer number), it could be split if needed. A room is split by addind a wall with at least 1 door. The floating number 𝐃∈[0,1] multiplied by the wall length defines the number of additional doors in the wall. By default `split=3x8x0.1`.
 
 ### Content
 
@@ -52,10 +54,10 @@ Meiro passes configuration data as parameters embedded in the web address.
 
 * `back` or `back=𝐔𝐑𝐋` &ndash; shows a button for closing the current page. If 𝐔𝐑𝐋 is defined it defines the returning URL address. No default value.
 
-* `zoom=𝐍` &ndash; zoom factor, the floating point number 𝐍 defines the maximal zoom-in and zoom-out. For example, `zoom=10` allows zooming from x0.1 to x10. By default `zoom=1`.
+* `zoom=𝐍` &ndash; zoom factor, the floating point number 𝐍∈[1,10] defines the maximal zoom-in and zoom-out. For example, `zoom=10` allows zooming from x0.1 to x10. By default `zoom=1`.
 
 * `lowpoly` &ndash; a parameter without a value. It existence hints Meiro to use simpler objects in attempt to make graphics faster. If not defined, Meiro uses more complex objects. No default value.
 					
-* `lang=𝐋` &ndash; string for the interface language, currently one of these values `en` (English) or `bg` (Bulgarian). If undefined, Meiro switches to English as if it is `lang=en`. No default value.
+* `lang=𝐋` &ndash; string for the interface language 𝐋∈[`en` (English), `bg` (Bulgarian)]. If undefined, Meiro switches to English as if it is `lang=en`. No default value.
 
 December 2020
