@@ -54,7 +54,7 @@ Meiro passes configuration data as parameters embedded in the web address.
 
 * `back` or `back=𝐔𝐑𝐋` &ndash; shows a button for closing the current page. If 𝐔𝐑𝐋 is defined it defines the returning URL address. No default value.
 
-* `zoom=𝐍` &ndash; zoom factor, the floating point number 𝐍∈[1,10] defines the maximal zoom-in and zoom-out. For example, `zoom=10` allows zooming from x0.1 to x10. By default `zoom=1`.
+* `zoom=𝐍` &ndash; zoom factor, the floating point number 𝐍∈[1,10] defines the maximal zoom-in and zoom-out. For example, `zoom=10` allows zooming from x0.1 to x10. By default `zoom=3`.
 
 * `lowpoly` &ndash; a parameter without a value. It existence hints Meiro to use simpler objects in attempt to make graphics faster. If not defined, Meiro uses more complex objects. No default value.
 					
