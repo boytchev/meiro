@@ -6,8 +6,8 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/meiro.css">
 		
-		<script src="libx/touch-emulator.js"></script>
-		<script> TouchEmulator(); </script>
+		<!--script src="libx/touch-emulator.js"></script>
+		<script> TouchEmulator(); </script-->
 		<script defer src="libx/three.min.js"></script>
 		<script defer src="libx/Tween.js"></script>
 		
@@ -71,7 +71,7 @@
 				
 				// create the dungeon
 				dungeon = new MEIRO.Dungeon();
-				blueprint =  new MEIRO.Blueprint();
+				blueprint =  new MEIRO.Blueprint( dungeon );
 
 				// setup mouse/touch/key navigation
 				controls = new MEIRO.OrbitControls();
@@ -94,6 +94,8 @@
 				// set own resize handler
 				window.removeEventListener('resize', onWindowResize);
 				window.addEventListener('resize', onWindowResize);
+				
+				translateHTML();
 			} // main
 			
 			
@@ -159,19 +161,37 @@
 				reanimate();
 			} // onWindowResize
 			
+			
+			function translateHTML()
+			{
+				var texts = document.querySelectorAll('[lang]'),
+					lang = options.lang || 'en';
+					
+				for( elem of texts )
+				{
+					if( elem.getAttribute('lang') != lang )
+						elem.style.display = 'none';
+				}
+			}
+			
+			
 		</script> 
 	</head>
 	
 	<body onload="main()">
 		<div id="dimmer"></div>
 		<div id="infoPanel" class="infoPanel">
+		
 			<h1 lang="en">Floor plan</h1>
+			<h1 lang="bg">Карта</h1>
 			
-			<p lang="en">This is a map of the whole Meiro building. You can use the map to plan your path to models, marked by squares. If you see stairs, you can go up or down to other floors.</p>
+			<p lang="en">This is a map of the whole Meiro dungeon. You can use the map to plan your path to models, marked by squares. If you see stairs, you can go up or down to other floors.</p>
+			<p lang="bg">Това е карта на цялото Меиро. Можете да я използвате, за да планирате пътя си до модулите, обозначени с квадрати. Ако се виждат стълби, значи можете да се придвижите на горен или долен етаж.</p>
 			
-			<p lang="en"></p>
-			
-			<button onclick="MEIRO.hideInfo()" lang="en">Close</button>
+			<button onclick="MEIRO.hideInfo()">
+				<span lang="en">Close</span>
+				<span lang="bg">Затвори</span>
+			</button>
 		</div>
 	</body>
 </html>
