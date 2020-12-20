@@ -240,10 +240,10 @@ body.blured {
 }
 
 em {
-	font-size: 115%;
-	font-family: Serif;
+	/*font-size: 115%;
+	font-family: Serif;*/
 	color: CornflowerBlue;
-	font-style: normal;
+	/*font-style: normal;*/
 }
 
 .index-list {
