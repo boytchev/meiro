@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/meiro.css">
+		
+		<!--script src="libx/touch-emulator.js"></script>
+		<script> TouchEmulator(); </script-->
+		<script defer src="libx/three.min.js"></script>
+		<!--script src="libx/GLTFExporter.js"></script-->
+		<script defer src="libx/Tween.js"></script>
+  
+		<script defer src="lib/main.js"></script>
+		<script defer src="lib/languages.js"></script>
+		<script defer src="lib/navigation.js"></script>
+		<script defer src="lib/dungeon.js"></script>
+		<script defer src="lib/dungeon.level.js"></script>
+		<script defer src="lib/dungeon.room.js"></script>
+		<script defer src="lib/primitives.js"></script>
+		<script defer src="lib/font.js"></script>
+
+		<script>
+			function main()
+			{
+				options = new MEIRO.Options();
+				MEIRO.initDungeonRoom();
+				MEIRO.initPrimitives();
+
+				// initialize the rendering canvas
+				renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+				renderer.fullWindow();
+
+				// setup scene and perspective camera
+				scene = new THREE.Scene();
+				scene.fog=new THREE.FogExp2( 'black', options.noAO?0.10:0.07 );
+				
+				var aspect = window.innerWidth / window.innerHeight;
+				camera = new THREE.PerspectiveCamera(80/aspect, aspect, 0.02, 20);
+
+				// managing the animation loop (& save battery & show statistics)
+				animationLoop = new MEIRO.AnimationLoop(MEIRO.defaultLoop,true); 
+
+				// create the dungeon
+				dungeon = new MEIRO.Dungeon( );
+				{
+					console.time('Image');
+					dungeon.image = new THREE.Object3D();
+					dungeon.imageFloor();
+					dungeon.imageWalls();
+					dungeon.imageStairs();
+					scene.add(dungeon.image);
+					console.timeEnd('Image');
+				}
+				
+				// put the view point in the dungeon
+				controls = new MEIRO.FirstPersonControls(dungeon);
+				controls.startFreeWalk();
+				
+				sessionStorage.setItem(MEIRO.SESSION_KEY.ROOM_OCCUPANCY,'');
+
+				// button for help info
+				buttonInfo = new MEIRO.CornerButton('bottomRight', MEIRO.showInfo, 'ИНФО', 'images/help.info.min.png');
+				
+				// buttons for blueprint map
+				buttonBlueprint = new MEIRO.CornerButton('topRight', function(){MEIRO.goBlueprint('play.html');}, 'КАРТА', 'images/blueprint.map.min.png');
+				buttonBlueprint.icon.style.fontFamily = 'Webdings';
+				
+				/*
+				// put the test model in room 0 level 0
+				for (var r in dungeon.levels[0].rooms)
+				{
+					var room = dungeon.levels[0].rooms[r];
+					var size = delta(room.min,room.max);
+					
+					if (MEIRO.Models.M00000.MIN_ROOM_SIZE<=Math.min(size.x,size.z))
+					{
+						//console.log('use room',r);
+						new MEIRO.Models.M00000(room);
+					}
+					else
+					{
+						//console.log('skip room',r);
+					}
+				}*/
+			}
+		</script> 
+	</head>
+	
+	<body onload="main()">
+		<div id="infoPanel" class="infoPanel" onclick="MEIRO.hideInfo()">
+		</div>
+	</body>
+</html>
