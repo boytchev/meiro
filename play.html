@@ -40,6 +40,14 @@
 				var aspect = window.innerWidth / window.innerHeight;
 				camera = new THREE.PerspectiveCamera(80/aspect, aspect, 0.02, 20);
 
+				cameraLight = new THREE.PointLight( 'white', 3, 10, 2 );
+					cameraLight.position.set( 0, 0, 0 );
+					cameraLight.penumbra = 1;
+				scene.add( cameraLight );
+				
+				scene.add( new THREE.AmbientLight('white',0.8) );
+
+
 				// managing the animation loop (& save battery & show statistics)
 				animationLoop = new MEIRO.AnimationLoop(MEIRO.defaultLoop,true); 
 
