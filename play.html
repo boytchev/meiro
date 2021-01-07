@@ -35,17 +35,19 @@
 
 				// setup scene and perspective camera
 				scene = new THREE.Scene();
-				scene.fog=new THREE.FogExp2( 'black', options.noAO?0.10:0.07 );
+				//scene.fog=new THREE.FogExp2( 'black', 0.15 );
+				scene.fog=new THREE.Fog( 'black', 1, 10 );
+				scene.background = new THREE.Color( 'black' );
 				
 				var aspect = window.innerWidth / window.innerHeight;
 				camera = new THREE.PerspectiveCamera(80/aspect, aspect, 0.02, 20);
 
-				cameraLight = new THREE.PointLight( 'white', 3, 10, 2 );
+				cameraLight = new THREE.PointLight( 'white', 0.5, 10, 2 );
 					cameraLight.position.set( 0, 0, 0 );
 					cameraLight.penumbra = 1;
 				scene.add( cameraLight );
 				
-				scene.add( new THREE.AmbientLight('white',0.8) );
+				scene.add( new THREE.AmbientLight('white',0.7) );
 
 
 				// managing the animation loop (& save battery & show statistics)
