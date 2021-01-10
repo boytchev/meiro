@@ -70,4 +70,4 @@ Meiro passes configuration data as parameters embedded in the web address.
 					
 * `lang=𝐋` &ndash; string for the interface language 𝐋∈[`en` (English), `bg` (Bulgarian)]. If undefined, Meiro switches to English as if it is `lang=en`. No default value.
 
-December 2020
+January 2021
