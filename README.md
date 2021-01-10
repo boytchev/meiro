@@ -25,6 +25,16 @@ allocation of rooms.
 [<img src="images/snapshots/floor-plan-2.jpg" width="150">](https://boytchev.github.io/meiro/blueprint.html?size=40x1x60&rooms=200&zoom=3)
 [<img src="images/snapshots/floor-plan-3.jpg" width="150">](https://boytchev.github.io/meiro/blueprint.html?size=40x10x60&rooms=200&zoom=3&pos=20x6x15x1&split=3x5x0.1)
 
+# Meiro dungeon
+
+Meiro is a closed building, i.e. there is no entrance or exit. t is split in rooms and every room could be accessed from any other room.
+
+Click on the image to run an example is an empty Meiro (medium, sparse and dense layouts).
+
+[<img src="images/snapshots/meiro-empty-1.jpg" width="150">](https://boytchev.github.io/meiro/play.html?size=30x5x20&stairs=10&pos=1x4x1x0&split=3x6x0.1&rooms=2000)
+[<img src="images/snapshots/meiro-empty-2.jpg" width="150">](https://boytchev.github.io/meiro/play.html?size=40x5x40&stairs=10&pos=1x4x1x0.7&split=5x10x0.2&rooms=2000)
+[<img src="images/snapshots/meiro-empty-3.jpg" width="150">](https://boytchev.github.io/meiro/play.html?size=20x5x20&stairs=10&pos=1x4x1x0.7&split=1x3x0&rooms=2000)
+
 # Meiro parameters
 
 Meiro passes configuration data as parameters embedded in the web address.
